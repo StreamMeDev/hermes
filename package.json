@@ -1,6 +1,6 @@
 {
   "name": "@streammedev/hermes",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Messages like you have never seen them before",
   "main": "index.js",
   "keywords": [
