@@ -38,6 +38,7 @@
   "dependencies": {
     "@streammedev/flux-store": "^1.0.0-BETA-2",
     "@streammedev/flyout": "0.0.5",
+    "debounce": "^1.0.0",
     "selection-range": "^1.1.0"
   },
   "peerDependencies": {

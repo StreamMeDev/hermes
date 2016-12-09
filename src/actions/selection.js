@@ -1,7 +1,7 @@
 'use strict';
 
 export default function selectionReducer (state, action) {
-	if (action.type === 'hermesChangeSelection') {
+	if (action.type === 'changeSelection') {
 		state.selection = action.selection;
 	}
 
@@ -10,7 +10,7 @@ export default function selectionReducer (state, action) {
 
 export function changeSelection (selection) {
 	return {
-		type: 'hermesChangeSelection',
+		type: 'changeSelection',
 		selection: selection
 	};
 }

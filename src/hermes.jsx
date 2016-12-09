@@ -1,5 +1,6 @@
 'use strict';
 import React, {PropTypes} from 'react';
+import debounce from 'debounce';
 import Flyout from '@streammedev/flyout';
 import {HermesWrapper} from './wrapper';
 import defaultFormatValue from './default-format-value';
@@ -116,6 +117,9 @@ export const Hermes = React.createClass({
 	},
 
 	componentDidMount: function () {
+		// Debounce the loadSuggestions method
+		this.loadSuggestions = debounce(this.loadSuggestions, 250);
+
 		// Adds a line of css to the first stylesheet on the page to get
 		// the placeholder text to work correctly.  The css looks like:
 		//
@@ -167,7 +171,7 @@ export const Hermes = React.createClass({
 		// getting the node first protects agains when the browser clears the selection
 		// node out, happens when you select all and delete.
 		if (!isEmpty && !endsInSpace && (valChanged || selChanged)) {
-			ifPropCall(this.props, 'loadSuggestions', getSelectedNode().textContent, this.input.textContent);
+			this.loadSuggestions();
 		} else if (this.props.suggestions && this.props.suggestions.length && ((selChanged && !atEnd) || isEmpty || endsInSpace)) {
 			this.clearSuggestions();
 		}
@@ -206,14 +210,6 @@ export const Hermes = React.createClass({
 		// dispatch the selection event
 		this.selectSuggestion();
 	},
-
-	onEscape: function () {
-		// @TODO revert to user input value
-		// debugger;
-		// ifPropCall(this.props, 'onChangeValue', this.props.userInput);
-	},
-
-	onBlur: function () {},
 
 	onKeyUp: function () {
 		this.updateSelection();
@@ -273,6 +269,7 @@ export const Hermes = React.createClass({
 		e.preventDefault();
 		ifPropCall(this.props, 'decrSuggestionIndex');
 	},
+
 	onArrowDown: function (e) {
 		// If we dont have suggestions, just update selection
 		if (!this.props.suggestions || !this.props.suggestions.length) {
@@ -285,13 +282,20 @@ export const Hermes = React.createClass({
 		e.preventDefault();
 		ifPropCall(this.props, 'incrSuggestionIndex');
 	},
+
 	clearSuggestions: function () {
 		ifPropCall(this.props, 'clearSuggestions');
 	},
+
 	selectSuggestion: function (index) {
 		index = index || this.props.suggestionIndex;
 		ifPropCall(this.props, 'selectSuggestion', this.props.suggestions[index]);
 	},
+
+	loadSuggestions: function () {
+		ifPropCall(this.props, 'loadSuggestions', getSelectedNode().textContent, this.input.textContent);
+	},
+
 	updateSelection: function () {
 		var sel = selection(this.input);
 		if (selectionChanged(this.props.selection, sel)) {

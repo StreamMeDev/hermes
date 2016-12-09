@@ -1,18 +1,17 @@
 'use strict';
 
 export default function valueReducer (state, action) {
-	if (action.type === 'userInput') {
+	if (action.type === 'changeValue') {
 		state.value = action.value;
-		state.userInput = action.value;
 		state.suggestionIndex = -1;
 	}
 
 	return state;
 }
 
-export function userInput (value) {
+export function changeValue (value) {
 	return {
-		type: 'userInput',
+		type: 'changeValue',
 		value: value
 	};
 }

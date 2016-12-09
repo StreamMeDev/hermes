@@ -16,7 +16,6 @@ var store = createStore({
 }, {});
 
 store.subscribe(function (state, oldState, action) {
-	console.log('action', action);
 	render(state);
 });
 

@@ -2,7 +2,7 @@
 import React, {PropTypes} from 'react';
 import {Hermes} from './hermes';
 import {createStore, bindActionCreators} from '@streammedev/flux-store';
-import valueReducer, {userInput} from './actions/value';
+import valueReducer, {changeValue} from './actions/value';
 import selectionReducer, {changeSelection} from './actions/selection';
 import suggestionsReducer, {setSuggestions, decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex} from './actions/suggestions';
 
@@ -43,7 +43,7 @@ export const HermesContainer = React.createClass({
 	render: function () {
 		return (
 			<Hermes
-				autoFocus
+				autoFocus={this.props.autoFocus}
 				placeholder={this.props.placeholder}
 				value={this.state.value}
 				selection={this.state.selection}
@@ -63,7 +63,7 @@ export const HermesContainer = React.createClass({
 	componentWillMount: function () {
 		// Bind action creators
 		this.actions = bindActionCreators({
-			onChangeValue: userInput,
+			onChangeValue: changeValue,
 			onChangeSelection: changeSelection,
 			setSuggestionIndex: setSuggestionIndex,
 			incrSuggestionIndex: incrSuggestionIndex,
@@ -75,8 +75,8 @@ export const HermesContainer = React.createClass({
 	},
 	componentDidMount: function () {
 		this.store = createStore({
-			userInput: valueReducer,
-			hermesChangeSelection: selectionReducer,
+			changeValue: valueReducer,
+			changeSelection: selectionReducer,
 			setSuggestions: suggestionsReducer,
 			setSuggestionIndex: suggestionsReducer,
 			incrSuggestionIndex: suggestionsReducer,
@@ -84,7 +84,6 @@ export const HermesContainer = React.createClass({
 			selectSuggestion: suggestionsReducer
 		}, this.state);
 		this._unsubscribe = this.store.subscribe((state, oldState, action) => {
-			console.log(action);
 			this.setState(state);
 		});
 	},

@@ -48,7 +48,6 @@ export default function suggestionsReducer (state, action) {
 
 		// Splice in the new value
 		state.value = state.value.slice(0, start) + sug + state.value.slice(end);
-		state.userInput = state.value;
 
 		// Update the cursor position
 		cursor = start + action.suggestion.length + 1;

@@ -13,13 +13,13 @@ export default function defaultFormatValue (v) {
 	const parts = v.replace(nbsp, ' ').split(' ');
 
 	// Wrap in spans
-	const s = parts.map(function (p, i) {
-		// If the last character is a space,
-		// return nbsp, aka: charCode 160
-		if (i === parts.length - 1 && p === '') {
-			hasTrailingSpace = true;
-		}
+	let s = parts.map(function (p, i) {
 		if (p === '') {
+			// If the last character is a space,
+			// return nbsp, aka: charCode 160
+			if (i === parts.length - 1) {
+				hasTrailingSpace = true;
+			}
 			return p;
 		}
 
@@ -30,10 +30,12 @@ export default function defaultFormatValue (v) {
 
 		// Just a normal part
 		return `<span class="hermes-content-word">${p}</span>`;
-	}).filter(function (p) {
-		// remove trailing space entry if there
-		return p !== '';
 	});
+	
+	// remove trailing space entry if there
+	if (s[s.length - 1] === nbsp) {
+		s.pop();
+	}
 
 	// Add trailing space back on
 	return s.join(' ') + (hasTrailingSpace ? nbsp : '');
