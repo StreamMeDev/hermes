@@ -33,7 +33,7 @@ export default function defaultFormatValue (v) {
 	});
 	
 	// remove trailing space entry if there
-	if (s[s.length - 1] === nbsp) {
+	if (s[s.length - 1] === '') {
 		s.pop();
 	}
 
