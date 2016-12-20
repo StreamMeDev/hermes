@@ -141,6 +141,7 @@ export const Hermes = React.createClass({
 		var valChanged = this.props.value !== prevProps.value;
 		var isEmpty = !this.props.value || this.props.value === '';
 		var endsInSpace = this.props.value && this.props.value[this.props.value.length - 1] === nbsp;
+		var shouldFocus = !prevProps.autoFocus && this.props.autoFocus;
 
 		// Update the selection if it has changed
 		if (selChanged) {
@@ -161,6 +162,12 @@ export const Hermes = React.createClass({
 			// cursor gets reset to the start of the input,
 			// so set it here to fix that
 			selection(this.input, this.props.selection);
+		} else if (shouldFocus) {
+			this.input.focus();
+			// If selection is not at the start, set it
+			if (this.props.selection && this.props.selection.end !== 0) {
+				selection(this.input, this.props.selection);
+			}
 		}
 
 		// do this after setting the selection
