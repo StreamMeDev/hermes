@@ -52,6 +52,7 @@ export const HermesContainer = React.createClass({
 				loadSuggestions={this.props.loadSuggestions}
 				clearSuggestions={this.props.clearSuggestions}
 				suggestions={this.state.suggestions}
+				formatValue={this.state.formatValue}
 				{...this.actions}
 			/>
 		);

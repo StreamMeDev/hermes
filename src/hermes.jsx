@@ -57,7 +57,6 @@ export const Hermes = React.createClass({
 		};
 	},
 	render: function () {
-		var val = this.props.formatValue(this.props.value);
 		return (
 			<HermesWrapper
 				className={this.props.className}
@@ -76,7 +75,7 @@ export const Hermes = React.createClass({
 					className={this.props.contentClassName}
 					onInput={this.onInput}
 					placeholder={this.props.placeholder}
-					dangerouslySetInnerHTML={{__html: val}}
+					dangerouslySetInnerHTML={{__html: this.props.formatValue(this.props.value)}}
 					onKeyDown={this.onKeyDown}
 					onBlur={this.onBlur}
 					onMouseDown={this.onMouseDown}

@@ -31,7 +31,7 @@ export default function defaultFormatValue (v) {
 		// Just a normal part
 		return `<span class="hermes-content-word">${p}</span>`;
 	});
-	
+
 	// remove trailing space entry if there
 	if (s[s.length - 1] === '') {
 		s.pop();
