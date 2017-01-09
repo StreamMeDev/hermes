@@ -7,43 +7,37 @@ Messages like you have never seen them before
 ## Install
 
 ```
-$ npm install --save @streamme/hermes
+$ npm install --save @streammedev/hermes
 ```
 
-## Usage
+## Basic Usage
 
 ```javascript
-var module = require('@streamme/hermes');
+var ReactDom = require('react-dom');
+var Hermes = require('@streamme/hermes');
 
-// ...
+ReactDom.render(<Hermes 
+	autoFocus
+	placeHolder="Get your message across..."
+	suggestions={[/* your array of suggestions, updated when loadSuggestions is called */]}
+	loadSuggestions={function (term, fullText) {
+		// Get from your server,
+		// or whereever you get them,
+		// term is the current word
+		// fullText is the full input value
+	}}
+	clearSuggestions={function () {
+		// clear your suggestion list
+	}}
+/>, document.getElementById('app'));
 ```
 
-## Development
+## Advanced Usage
 
-This package follows semver, when you wish to publish a version run the proper npm command.  For example, if we made a bug fix you can do this:
+The package exposes all of the internal parts, so you can compose them together in your application however you like.
 
-```
-$ npm version patch
-$ git push
-$ npm publish
-```
+*More to come on this.*
 
-Here are the other types of version bumps:
+## Contributing
 
-- Major (`npm version major`): This is for breaking changes. Anytime a method is changed or the functionality is modified this bump should be made.
-- Minor (`npm version minor`): This is for features additions. When a new method is added which doesn't affect the behavior of existing features, this bump should be made.
-- Patch (`npm version patch`): This is for bug fixes. Only bump this if it is safe for production code to update wihout being QA'd.  (AKA, almost never)
-
-For each of these you can run a 'pre' version by prepending to the command, ex `npm version preminor`.
-
-All feature development should be done on a branch off `master`.  When a feature is complete and the pull request approved, publish a 'pre' version of the package for testing across environments.  To install that 'pre' version of the package do the following, where the verison number contains the correct 'pre' version:
-
-```
-$ npm install --save @streamme/hermes@1.0.0-0
-```
-
-Running the tests:
-
-```
-$ npm install && npm test
-```
+Contributions are welcome. Please see our guidelines in [CONTRIBUTING.md](contributing.md)
