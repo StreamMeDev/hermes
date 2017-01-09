@@ -16,12 +16,9 @@ export const HermesContainer = React.createClass({
 		flyoutElement: PropTypes.string,
 		children: PropTypes.node,
 		autoFocus: PropTypes.bool,
-
 		value: PropTypes.string,
 		formatValue: PropTypes.func,
-
 		preventNewLines: PropTypes.bool,
-
 		suggestions: PropTypes.array,
 		loadSuggestions: PropTypes.func,
 		clearSuggestions: PropTypes.func,
@@ -37,7 +34,10 @@ export const HermesContainer = React.createClass({
 	getInitialState: function () {
 		return {
 			value: this.props.value || '',
-			suggestionIndex: -1
+			suggestionIndex: -1,
+			lastSuggestionIndex: -1,
+			suggestions: null,
+			selection: null
 		};
 	},
 	render: function () {

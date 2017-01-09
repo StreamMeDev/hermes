@@ -244,7 +244,7 @@ export const Hermes = React.createClass({
 		this.updateSelection();
 
 		// Remove the zero width space if thats all thats there
-		// @NOTE seatch this file for "zws" to see where its added
+		// @NOTE search this file for "zws" to see where its added
 		ifPropCall(this.props, 'onChangeValue', this.input.textContent.replace(zws, ''));
 	},
 
