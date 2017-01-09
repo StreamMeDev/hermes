@@ -1,8 +1,10 @@
-# hermes
+# Hermes
 
 [![js-happiness-style](https://img.shields.io/badge/code%20style-happiness-brightgreen.svg)](https://github.com/JedWatson/happiness)
 
 Messages like you have never seen them before
+
+![Hermes Example](https://raw.githubusercontent.com/StreamMeDev/hermes/master/hermes.gif)
 
 ## Install
 

@@ -23,7 +23,7 @@ var actions = bindActionCreators({
 	loadSuggestions: function loadSuggestions (term, fullText) {
 		var suggestions;
 		if (term.charAt(0) === '#' && term.length > 1) {
-			suggestions = ['#foo', '#bar', '#baz'];
+			suggestions = ['#sweet', '#awesome', '#fake'];
 		} else if (fullText.charAt(0) === '/') {
 			suggestions = ['/command', '/clear', '/whisper'];
 		}
