@@ -18,6 +18,7 @@
   "scripts": {
     "test": "npm run babel && happiness && mocha --grep 'BROWSER: ' --invert",
     "prepublish": "npm test",
+    "postpublish": "git push && git push origin --tags",
     "test-browser": "mochify",
     "babel": "babel src -d lib",
     "dev": "babel --watch src -d lib"
