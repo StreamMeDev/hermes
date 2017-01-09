@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Hermes Example</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			html {
+				background: url(http://media2.giphy.com/media/l0LIYv9tJFIVHxF5u/giphy.gif);
+			}
+			#app {
+				max-width: 40rem;
+				margin: 0 auto;
+				padding: 1rem;
+				background: aqua;
+				font-family: arial, sans-serif;
+				border-bottom: 2rem dotted teal;
+			}
+			h1 {
+				color: fuchsia;
+				-webkit-text-stroke: .05rem #fff;
+				margin: 0 0 1rem;
+				text-transform: uppercase;
+			}
+
+			.hermes {
+				position: relative;
+			}
+
+			.hermes-content {
+				background: fuchsia;
+				padding: 1rem;
+				border: .25rem ridge teal;
+				color: #fff;
+				letter-spacing: .05rem;
+			}
+			.hermes-content:focus {
+				outline: none;
+			}
+
+			.hermes .flyout {
+				position: absolute;
+				top: 100%;
+				width: 100%;
+				background: teal;
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.hermes .flyout li {
+				padding: 1rem;
+				color: #fff;
+			}
+			.hermes .flyout li.selected {
+				background: fuchsia;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app"></div>
+		<script src="/main.js"></script>
+	</body>
+</html>
