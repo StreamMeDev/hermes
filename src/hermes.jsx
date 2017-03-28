@@ -132,6 +132,8 @@ export const Hermes = React.createClass({
 		// Manage focus, because autoFocus property doesnt work on contenteditable
 		if (this.props.autoFocus) {
 			this.input.focus();
+		} else {
+			this.input.blur();
 		}
 	},
 
