@@ -133,7 +133,10 @@ export const Hermes = React.createClass({
 		if (this.props.autoFocus) {
 			this.input.focus();
 		} else {
-			this.input.blur();
+			this.input.focus();
+			setTimeout(() => {
+				this.input.blur();
+			});
 		}
 	},
 
