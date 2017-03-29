@@ -131,11 +131,17 @@ export const Hermes = React.createClass({
 
 		// Manage focus, because autoFocus property doesnt work on contenteditable
 		if (this.props.autoFocus) {
-			this.input.focus();
-		} else {
-			this.input.focus();
+			// If we are empty and trying to autofocus, it will not
+			// focus unless there is some content, add the zero-width space.
+			// Timeout to ensure it happens after the first few updates,
+			// otherwise focus can get stolen by a change in selection.
+			// Using selection because in some cases `focus` still
+			// doesn't seem to work.
 			setTimeout(() => {
-				this.input.blur();
+				if (!this.props.value || this.props.value === '') {
+					this.input.textContent = zws;
+				}
+				selection(this.input, this.props.selection);
 			});
 		}
 	},
