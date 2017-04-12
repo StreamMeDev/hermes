@@ -45,6 +45,7 @@ export const Hermes = React.createClass({
 		return {
 			className: 'hermes',
 			contentClassName: 'hermes-content',
+			emptyClassName: 'hermes-empty',
 			flyoutElement: 'ol',
 			formatValue: defaultFormatValue,
 			preventNewLines: false,
@@ -59,7 +60,7 @@ export const Hermes = React.createClass({
 	render: function () {
 		return (
 			<HermesWrapper
-				className={this.props.className}
+				className={this.props.className + (!this.props.value || this.props.value === '' ? ' ' + this.props.emptyClassName : '')}
 				onEscape={this.onEscape}
 				onEnter={this.onEnter}
 				onArrowUp={this.onArrowUp}
@@ -122,11 +123,11 @@ export const Hermes = React.createClass({
 		// Adds a line of css to the first stylesheet on the page to get
 		// the placeholder text to work correctly.  The css looks like:
 		//
-		//   .hermes-content:empty:not(:focus):before { content:attr(placeholder); }
+		//  .hermes-empty .hermes-content:not(:focus):before { content:attr(placeholder); }
 		//
 		// Only adds the rule once per unique className
 		if (!cssRules[this.props.contentClassName]) {
-			document.styleSheets[0].insertRule(`.${this.props.contentClassName}:empty:not(:focus):before { content:attr(placeholder); }`, 0);
+			document.styleSheets[0].insertRule(`.${this.props.emptyClassName} .${this.props.contentClassName}:not(:focus):before { content:attr(placeholder); }`, 0);
 		}
 
 		// Manage focus, because autoFocus property doesnt work on contenteditable
