@@ -1,6 +1,6 @@
 'use strict';
 
-export default function suggestionsReducer (state, action) {
+module.exports = function suggestionsReducer (state, action) {
 	if (action.type === 'setSuggestions') {
 		state.suggestions = action.suggestions;
 	} else if (action.type === 'incrSuggestionIndex') {
@@ -61,38 +61,38 @@ export default function suggestionsReducer (state, action) {
 		state.suggestionIndex = -1;
 	}
 	return state;
-}
+};
 
-export function selectSuggestion (suggestionText) {
+module.exports.selectSuggestion = function selectSuggestion (suggestionText) {
 	return {
 		type: 'selectSuggestion',
 		suggestion: suggestionText
 	};
-}
+};
 
-export function setSuggestions (suggestions) {
+module.exports.setSuggestions = function setSuggestions (suggestions) {
 	return {
 		type: 'setSuggestions',
 		suggestions: suggestions
 	};
-}
+};
 
-export function setSuggestionIndex (value, storeLast) {
+module.exports.setSuggestionIndex = function setSuggestionIndex (value, storeLast) {
 	return {
 		type: 'setSuggestionIndex',
 		value: value,
 		storeLast: storeLast
 	};
-}
+};
 
-export function decrSuggestionIndex () {
+module.exports.decrSuggestionIndex = function decrSuggestionIndex () {
 	return {
 		type: 'decrSuggestionIndex'
 	};
-}
+};
 
-export function incrSuggestionIndex () {
+module.exports.incrSuggestionIndex = function incrSuggestionIndex () {
 	return {
 		type: 'incrSuggestionIndex'
 	};
-}
+};

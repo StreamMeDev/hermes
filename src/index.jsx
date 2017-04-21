@@ -1,30 +1,30 @@
 'use strict';
-import React, {PropTypes} from 'react';
-import {Hermes} from './hermes';
-import createDefaultStore from './create-default-store';
-import {bindActionCreators} from '@streammedev/flux-store';
-import {changeValue} from './actions/value';
-import {changeSelection} from './actions/selection';
-import {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex} from './actions/suggestions';
+const React = require('react');
+const Hermes = require('./hermes');
+const createDefaultStore = require('./create-default-store');
+const {bindActionCreators} = require('@streammedev/flux-store');
+const {changeValue} = require('./actions/value');
+const {changeSelection} = require('./actions/selection');
+const {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex} = require('./actions/suggestions');
 
-export const HermesContainer = React.createClass({
+module.exports = React.createClass({
 	displayName: 'HermesContainer',
 	propTypes: {
-		className: PropTypes.string,
-		placeholder: PropTypes.string,
-		contentClassName: PropTypes.string,
-		flyoutClassName: PropTypes.string,
-		flyoutElement: PropTypes.string,
-		children: PropTypes.node,
-		autoFocus: PropTypes.bool,
-		value: PropTypes.string,
-		formatValue: PropTypes.func,
-		preventNewLines: PropTypes.bool,
-		suggestions: PropTypes.array,
-		loadSuggestions: PropTypes.func,
-		clearSuggestions: PropTypes.func,
-		getSuggestionText: PropTypes.func,
-		store: PropTypes.object
+		className: React.PropTypes.string,
+		placeholder: React.PropTypes.string,
+		contentClassName: React.PropTypes.string,
+		flyoutClassName: React.PropTypes.string,
+		flyoutElement: React.PropTypes.string,
+		children: React.PropTypes.node,
+		autoFocus: React.PropTypes.bool,
+		value: React.PropTypes.string,
+		formatValue: React.PropTypes.func,
+		preventNewLines: React.PropTypes.bool,
+		suggestions: React.PropTypes.array,
+		loadSuggestions: React.PropTypes.func,
+		clearSuggestions: React.PropTypes.func,
+		getSuggestionText: React.PropTypes.func,
+		store: React.PropTypes.object
 	},
 	getDefaultProps: function () {
 		return {
