@@ -1,22 +1,24 @@
+require('es6-symbol/implement');
+require('es6-promise').polyfill();
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Hermes = require('@streammedev/hermes');
-var {createStore, bindActionCreators} = require('@streammedev/flux-store');
+var Hermes = require('../../');
+var {bindActionCreators} = require('@streammedev/flux-store');
 
 var el = document.getElementById('app');
-var store = createStore({
-	loadSuggestions: function (state, action) {
-		state.suggestions = action.suggestions;
-		return state;
-	},
-	clearSuggestions: function (state, action) {
-		state.suggestions = null;
-		return state;
-	}
-}, {});
 
-store.subscribe(function (state, oldState, action) {
-	render(state);
+// Setup the store, use the default then add our suggestion reducers
+var store = Hermes.createDefaultStore({});
+store.addReducer('loadSuggestions', function (state, action) {
+	state.suggestions = action.suggestions;
+	return state;
+});
+store.addReducer('clearSuggestions', function (state, action) {
+	state.suggestions = null;
+	return state;
+});
+store.subscribe((state, oldState, action) => {
+	console.log(action.type, action);
 });
 
 var actions = bindActionCreators({
@@ -48,6 +50,7 @@ function render (state) {
 			<Hermes
 				autoFocus
 				placeholder="Type in me!!"
+				store={store}
 				{...state}
 				{...actions}
 			/>

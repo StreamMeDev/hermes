@@ -1,6 +1,7 @@
 module.exports = require('./lib').HermesContainer;
 module.exports.Hermes = require('./lib/hermes').Hermes;
 module.exports.HermesWrapper = require('./lib/wrapper').HermesWrapper;
+module.exports.createDefaultStore = require('./lib/create-default-store');
 
 // Export actions
 var selection = require('./lib/actions/selection');

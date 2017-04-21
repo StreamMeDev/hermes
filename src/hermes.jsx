@@ -142,7 +142,7 @@ export const Hermes = React.createClass({
 				if (!this.props.value || this.props.value === '') {
 					this.input.textContent = zws;
 				}
-				selection(this.input, this.props.selection);
+				selection(this.input, this.props.selection || {});
 			});
 		}
 	},
@@ -231,6 +231,11 @@ export const Hermes = React.createClass({
 
 	onKeyUp: function () {
 		this.updateSelection();
+
+		// Fix for IE where the onInput event is not fired.  Compares
+		// the value with the input value and fires the onChangeValue
+		// if it is different on each keyup
+		this.updateValue();
 	},
 
 	onCtrlC: function () {
@@ -252,12 +257,9 @@ export const Hermes = React.createClass({
 	},
 
 	onInput: function (e) {
-		// On input, update the value and the selection
+		// On input, update the selection and the value
 		this.updateSelection();
-
-		// Remove the zero width space if thats all thats there
-		// @NOTE search this file for "zws" to see where its added
-		ifPropCall(this.props, 'onChangeValue', this.input.textContent.replace(zws, ''));
+		this.updateValue();
 	},
 
 	onMouseDown: function () {
@@ -301,6 +303,10 @@ export const Hermes = React.createClass({
 		ifPropCall(this.props, 'incrSuggestionIndex');
 	},
 
+	onBlur: function () {
+		this.updateValue();
+	},
+
 	clearSuggestions: function () {
 		ifPropCall(this.props, 'clearSuggestions');
 	},
@@ -318,6 +324,15 @@ export const Hermes = React.createClass({
 		var sel = selection(this.input);
 		if (selectionChanged(this.props.selection, sel)) {
 			ifPropCall(this.props, 'onChangeSelection', sel);
+		}
+	},
+
+	updateValue: function () {
+		// Remove the zero width space if thats all thats there
+		// @NOTE search this file for "zws" to see where its added
+		var cleanInput = this.input.textContent.replace(zws, '');
+		if (cleanInput !== this.props.value) {
+			ifPropCall(this.props, 'onChangeValue', cleanInput);
 		}
 	}
 });

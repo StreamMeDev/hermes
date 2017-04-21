@@ -1,10 +1,11 @@
 'use strict';
 import React, {PropTypes} from 'react';
 import {Hermes} from './hermes';
-import {createStore, bindActionCreators} from '@streammedev/flux-store';
-import valueReducer, {changeValue} from './actions/value';
-import selectionReducer, {changeSelection} from './actions/selection';
-import suggestionsReducer, {setSuggestions, decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex} from './actions/suggestions';
+import createDefaultStore from './create-default-store';
+import {bindActionCreators} from '@streammedev/flux-store';
+import {changeValue} from './actions/value';
+import {changeSelection} from './actions/selection';
+import {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex} from './actions/suggestions';
 
 export const HermesContainer = React.createClass({
 	displayName: 'HermesContainer',
@@ -22,7 +23,8 @@ export const HermesContainer = React.createClass({
 		suggestions: PropTypes.array,
 		loadSuggestions: PropTypes.func,
 		clearSuggestions: PropTypes.func,
-		getSuggestionText: PropTypes.func
+		getSuggestionText: PropTypes.func,
+		store: PropTypes.object
 	},
 	getDefaultProps: function () {
 		return {
@@ -57,10 +59,6 @@ export const HermesContainer = React.createClass({
 			/>
 		);
 	},
-	componentWillReceiveProps: function (props) {
-		// update suggestions on state
-		this.dispatch(setSuggestions(props.suggestions));
-	},
 	componentWillMount: function () {
 		// Bind action creators
 		this.actions = bindActionCreators({
@@ -75,15 +73,7 @@ export const HermesContainer = React.createClass({
 		}, this.dispatch);
 	},
 	componentDidMount: function () {
-		this.store = createStore({
-			changeValue: valueReducer,
-			changeSelection: selectionReducer,
-			setSuggestions: suggestionsReducer,
-			setSuggestionIndex: suggestionsReducer,
-			incrSuggestionIndex: suggestionsReducer,
-			decrSuggestionIndex: suggestionsReducer,
-			selectSuggestion: suggestionsReducer
-		}, this.state);
+		this.store = this.props.store || createDefaultStore(this.state);
 		this._unsubscribe = this.store.subscribe((state, oldState, action) => {
 			this.setState(state);
 		});

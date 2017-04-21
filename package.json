@@ -21,7 +21,8 @@
     "postpublish": "git push && git push origin --tags",
     "test-browser": "mochify",
     "babel": "babel src -d lib",
-    "dev": "babel --watch src -d lib"
+    "dev": "babel --watch src -d lib",
+    "example-basic": "cd examples/basic && npm i && npm start"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

@@ -4,16 +4,20 @@
   "description": "A basic usage example for hermes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "StreamMe",
   "license": "ISC",
   "dependencies": {
     "@streammedev/flux-store": "^1.0.0-BETA-2",
-    "@streammedev/hermes": "file:../../",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify-middleware": "^7.1.0",
     "ejs": "^2.5.3",
+    "es6-promise": "^4.1.0",
+    "es6-symbol": "^3.1.1",
     "express": "^4.14.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
