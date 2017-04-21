@@ -1,45 +1,45 @@
 'use strict';
-import React, {PropTypes} from 'react';
-import debounce from 'debounce';
-import Flyout from '@streammedev/flyout';
-import {HermesWrapper} from './wrapper';
-import defaultFormatValue from './default-format-value';
-import ifPropCall from './if-prop-is-func-call';
+const React = require('react');
+const debounce = require('debounce');
+const Flyout = require('@streammedev/flyout');
+const HermesWrapper = require('./wrapper');
+const defaultFormatValue = require('./default-format-value');
+const ifPropCall = require('./if-prop-is-func-call');
 const selection = typeof window !== 'undefined' ? require('selection-range') : () => {};
 const nbsp = String.fromCharCode(160);
 const zws = String.fromCharCode(8203);
 // Track which placeholder css rules have been added for the hermes instances, see below
 const cssRules = {};
 
-export const Hermes = React.createClass({
+module.exports = React.createClass({
 	displayName: 'Hermes',
 	propTypes: {
-		className: PropTypes.string,
-		placeholder: PropTypes.string,
-		contentClassName: PropTypes.string,
-		flyoutClassName: PropTypes.string,
-		flyoutElement: PropTypes.string,
-		children: PropTypes.node,
-		autoFocus: PropTypes.bool,
+		className: React.PropTypes.string,
+		placeholder: React.PropTypes.string,
+		contentClassName: React.PropTypes.string,
+		flyoutClassName: React.PropTypes.string,
+		flyoutElement: React.PropTypes.string,
+		children: React.PropTypes.node,
+		autoFocus: React.PropTypes.bool,
 
-		value: PropTypes.string,
-		formatValue: PropTypes.func,
-		onChangeValue: PropTypes.func,
+		value: React.PropTypes.string,
+		formatValue: React.PropTypes.func,
+		onChangeValue: React.PropTypes.func,
 
-		selection: PropTypes.object,
-		onChangeSelection: PropTypes.func,
+		selection: React.PropTypes.object,
+		onChangeSelection: React.PropTypes.func,
 
-		preventNewLines: PropTypes.bool,
+		preventNewLines: React.PropTypes.bool,
 
-		suggestions: PropTypes.array,
-		loadSuggestions: PropTypes.func,
-		clearSuggestions: PropTypes.func,
-		renderSuggestion: PropTypes.func,
-		suggestionIndex: PropTypes.number,
-		lastSuggestionIndex: PropTypes.number,
-		selectSuggestion: PropTypes.func,
-		decrSuggestionIndex: PropTypes.func,
-		incrSuggestionIndex: PropTypes.func
+		suggestions: React.PropTypes.array,
+		loadSuggestions: React.PropTypes.func,
+		clearSuggestions: React.PropTypes.func,
+		renderSuggestion: React.PropTypes.func,
+		suggestionIndex: React.PropTypes.number,
+		lastSuggestionIndex: React.PropTypes.number,
+		selectSuggestion: React.PropTypes.func,
+		decrSuggestionIndex: React.PropTypes.func,
+		incrSuggestionIndex: React.PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {

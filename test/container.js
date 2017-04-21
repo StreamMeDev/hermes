@@ -2,7 +2,7 @@
 var assert = require('assert');
 var enzyme = require('enzyme');
 var React = require('react');
-var Wrapper = React.createFactory(require('../lib/wrapper').HermesWrapper);
+var Wrapper = React.createFactory(require('../lib/wrapper'));
 
 describe('Hermes Wrapper', function () {
 	it('should render', function () {

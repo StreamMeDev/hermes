@@ -1,23 +1,23 @@
 'use strict';
-import React, {PropTypes} from 'react';
-import ifPropCall from './if-prop-is-func-call';
+const React = require('react');
+const ifPropCall = require('./if-prop-is-func-call');
 
-export const HermesWrapper = React.createClass({
+module.exports = React.createClass({
 	displayName: 'HermesWrapper',
 	propTypes: {
-		onEnter: PropTypes.func,
-		onShiftEnter: PropTypes.func,
-		onEscape: PropTypes.func,
-		onArrowDown: PropTypes.func,
-		onArrowUp: PropTypes.func,
-		onCtrlC: PropTypes.func,
-		onCtrlA: PropTypes.func,
-		onCtrlE: PropTypes.func,
-		onAltB: PropTypes.func,
-		onAltF: PropTypes.func,
-		onKeyUp: PropTypes.func,
-		onKeyDown: PropTypes.func,
-		children: PropTypes.node
+		onEnter: React.PropTypes.func,
+		onShiftEnter: React.PropTypes.func,
+		onEscape: React.PropTypes.func,
+		onArrowDown: React.PropTypes.func,
+		onArrowUp: React.PropTypes.func,
+		onCtrlC: React.PropTypes.func,
+		onCtrlA: React.PropTypes.func,
+		onCtrlE: React.PropTypes.func,
+		onAltB: React.PropTypes.func,
+		onAltF: React.PropTypes.func,
+		onKeyUp: React.PropTypes.func,
+		onKeyDown: React.PropTypes.func,
+		children: React.PropTypes.node
 	},
 	render: function () {
 		// don't pass unnecessary props to children: https://fb.me/react-unknown-prop

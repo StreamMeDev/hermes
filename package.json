@@ -33,9 +33,9 @@
     "happiness": "^7.1.2",
     "mocha": "^3.2.0",
     "mochify": "^2.18.1",
-    "react": "^15.4.1",
-    "react-addons-test-utils": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react": "<15.5.0",
+    "react-addons-test-utils": "<15.5.0",
+    "react-dom": "<15.5.0"
   },
   "dependencies": {
     "@streammedev/flux-store": "^1.0.0-BETA-3",

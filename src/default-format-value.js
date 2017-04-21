@@ -1,6 +1,6 @@
 const nbsp = String.fromCharCode(160);
 
-export default function defaultFormatValue (v) {
+module.exports = function defaultFormatValue (v) {
 	// Dont process empty string
 	if (!v || v === '') {
 		return v;
@@ -39,4 +39,4 @@ export default function defaultFormatValue (v) {
 
 	// Add trailing space back on
 	return s.join(' ') + (hasTrailingSpace ? nbsp : '');
-}
+};

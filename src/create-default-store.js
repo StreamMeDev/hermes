@@ -1,10 +1,10 @@
 'use strict';
-import {createStore} from '@streammedev/flux-store';
-import valueReducer from './actions/value';
-import selectionReducer from './actions/selection';
-import suggestionsReducer from './actions/suggestions';
+const {createStore} = require('@streammedev/flux-store');
+const valueReducer = require('./actions/value');
+const selectionReducer = require('./actions/selection');
+const suggestionsReducer = require('./actions/suggestions');
 
-module.exports = function (initialState) {
+module.exports = function createDefaultStore (initialState) {
 	return createStore({
 		changeValue: valueReducer,
 		changeSelection: selectionReducer,
