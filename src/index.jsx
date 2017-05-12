@@ -5,6 +5,7 @@ const createDefaultStore = require('./create-default-store');
 const {bindActionCreators} = require('@streammedev/flux-store');
 const {changeValue} = require('./actions/value');
 const {changeSelection} = require('./actions/selection');
+const ifPropCall = require('./if-prop-is-func-call');
 const {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex} = require('./actions/suggestions');
 
 module.exports = React.createClass({
@@ -25,6 +26,7 @@ module.exports = React.createClass({
 		clearSuggestions: React.PropTypes.func,
 		renderSuggestion: React.PropTypes.func,
 		getSuggestionText: React.PropTypes.func,
+		selectSuggestion: React.PropTypes.func,
 		store: React.PropTypes.object
 	},
 	getDefaultProps: function () {
@@ -70,6 +72,7 @@ module.exports = React.createClass({
 			incrSuggestionIndex: incrSuggestionIndex,
 			decrSuggestionIndex: decrSuggestionIndex,
 			selectSuggestion: (selection) => {
+				ifPropCall(this.props, 'selectSuggestion', selection);
 				return selectSuggestion(this.props.getSuggestionText(selection));
 			}
 		}, this.dispatch);
