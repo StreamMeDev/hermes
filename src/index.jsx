@@ -13,6 +13,7 @@ module.exports = React.createClass({
 	propTypes: {
 		className: React.PropTypes.string,
 		placeholder: React.PropTypes.string,
+		emptyClassName: React.PropTypes.string,
 		contentClassName: React.PropTypes.string,
 		flyoutClassName: React.PropTypes.string,
 		flyoutElement: React.PropTypes.string,
@@ -26,7 +27,8 @@ module.exports = React.createClass({
 		clearSuggestions: React.PropTypes.func,
 		renderSuggestion: React.PropTypes.func,
 		getSuggestionText: React.PropTypes.func,
-		selectSuggestion: React.PropTypes.func,
+		onSelectSuggestion: React.PropTypes.func,
+		onChangeValue: React.PropTypes.func,
 		store: React.PropTypes.object
 	},
 	getDefaultProps: function () {
@@ -48,7 +50,13 @@ module.exports = React.createClass({
 	render: function () {
 		return (
 			<Hermes
+				className={this.props.className}
+				emptyClassName={this.props.emptyClassName}
+				contentClassName={this.props.contentClassName}
+				flyoutClassName={this.props.flyoutClassName}
+				flyoutElement={this.props.flyoutElement}
 				autoFocus={this.props.autoFocus}
+				preventNewLines={this.props.preventNewLines}
 				placeholder={this.props.placeholder}
 				value={this.state.value}
 				selection={this.state.selection}
@@ -60,19 +68,22 @@ module.exports = React.createClass({
 				suggestions={this.state.suggestions}
 				formatValue={this.state.formatValue}
 				{...this.actions}
-			/>
+			>{this.props.children}</Hermes>
 		);
 	},
 	componentWillMount: function () {
 		// Bind action creators
 		this.actions = bindActionCreators({
-			onChangeValue: changeValue,
 			onChangeSelection: changeSelection,
 			setSuggestionIndex: setSuggestionIndex,
 			incrSuggestionIndex: incrSuggestionIndex,
 			decrSuggestionIndex: decrSuggestionIndex,
+			onChangeValue: (val) => {
+				ifPropCall(this.props, 'onChangeValue', val);
+				return changeValue(val);
+			},
 			selectSuggestion: (selection) => {
-				ifPropCall(this.props, 'selectSuggestion', selection);
+				ifPropCall(this.props, 'onSelectSuggestion', selection);
 				return selectSuggestion(this.props.getSuggestionText(selection));
 			}
 		}, this.dispatch);

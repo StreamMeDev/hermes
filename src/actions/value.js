@@ -1,6 +1,6 @@
 'use strict';
 
-module.export = function valueReducer (state, action) {
+module.exports = function valueReducer (state, action) {
 	if (action.type === 'changeValue') {
 		state.value = action.value;
 		state.suggestionIndex = -1;

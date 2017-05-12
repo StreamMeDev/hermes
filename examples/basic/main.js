@@ -43,6 +43,14 @@ var actions = bindActionCreators({
 	}
 }, store.dispatch);
 
+// Just examples of using the props
+function onChangeValue (val) {
+	console.log('Value changed: ', val);
+}
+function onSelectSuggestion (suggestion) {
+	console.log('Suggestion selected: ', suggestion);
+}
+
 function render (state) {
 	ReactDOM.render((
 		<div>
@@ -53,6 +61,8 @@ function render (state) {
 				store={store}
 				{...state}
 				{...actions}
+				onChangeValue={onChangeValue}
+				onSelectSuggestion={onSelectSuggestion}
 			/>
 		</div>
 	), el);

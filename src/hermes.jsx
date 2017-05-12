@@ -16,6 +16,7 @@ module.exports = React.createClass({
 	propTypes: {
 		className: React.PropTypes.string,
 		placeholder: React.PropTypes.string,
+		emptyClassName: React.PropTypes.string,
 		contentClassName: React.PropTypes.string,
 		flyoutClassName: React.PropTypes.string,
 		flyoutElement: React.PropTypes.string,
