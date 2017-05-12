@@ -58,7 +58,7 @@ ReactDom.render(<Hermes
 | `getSuggestionText` | identity function | A function to get the suggestion text from the selected suggestion item |
 | `onSelectSuggestion` | undefined | A function to call when a suggestion is selected |
 | `onChangeValue` | undefined | A function to call when the value changes |
-| `store` | undefined | A redux compatible store like (@streammedev/flux-store](https://github.com/StreamMeDev/flux-store)|
+| `store` | undefined | A redux compatible store like [@streammedev/flux-store](https://github.com/StreamMeDev/flux-store)|
 
 ## Example
 
