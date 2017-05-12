@@ -20,7 +20,7 @@ $ npm install --save @streammedev/hermes
 var ReactDom = require('react-dom');
 var Hermes = require('@streammedev/hermes');
 
-ReactDom.render(<Hermes 
+ReactDom.render(<Hermes
 	autoFocus
 	placeHolder="Get your message across..."
 	suggestions={[/* your array of suggestions, updated when loadSuggestions is called */]}
@@ -56,4 +56,4 @@ The package exposes all of the internal parts, so you can compose them together 
 
 ## Contributing
 
-Contributions are welcome. Please see our guidelines in [CONTRIBUTING.md](contributing.md)
+Contributions are welcome. Please see our guidelines in [CONTRIBUTING.md](CONTRIBUTING.md)
