@@ -23,6 +23,7 @@ module.exports = React.createClass({
 		suggestions: React.PropTypes.array,
 		loadSuggestions: React.PropTypes.func,
 		clearSuggestions: React.PropTypes.func,
+		renderSuggestion: React.PropTypes.func,
 		getSuggestionText: React.PropTypes.func,
 		store: React.PropTypes.object
 	},
@@ -53,6 +54,7 @@ module.exports = React.createClass({
 				lastSuggestionIndex={this.state.lastSuggestionIndex}
 				loadSuggestions={this.props.loadSuggestions}
 				clearSuggestions={this.props.clearSuggestions}
+				renderSuggestion={this.props.renderSuggestion}
 				suggestions={this.state.suggestions}
 				formatValue={this.state.formatValue}
 				{...this.actions}
