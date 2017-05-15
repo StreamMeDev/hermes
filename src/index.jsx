@@ -6,7 +6,7 @@ const {bindActionCreators} = require('@streammedev/flux-store');
 const {changeValue} = require('./actions/value');
 const {changeSelection} = require('./actions/selection');
 const ifPropCall = require('./if-prop-is-func-call');
-const {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex} = require('./actions/suggestions');
+const {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex, setSuggestions} = require('./actions/suggestions');
 
 module.exports = React.createClass({
 	displayName: 'HermesContainer',
@@ -37,6 +37,11 @@ module.exports = React.createClass({
 				return suggestion;
 			}
 		};
+	},
+	componentWillReceiveProps: function (newProps) {
+		if (newProps.suggestions) {
+			this.store.dispatch(setSuggestions(newProps.suggestions));
+		}
 	},
 	getInitialState: function () {
 		return {
