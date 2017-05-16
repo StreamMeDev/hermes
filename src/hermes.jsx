@@ -218,7 +218,9 @@ module.exports = React.createClass({
 			e.preventDefault();
 		}
 	},
-
+	onEscape: function (e) {
+		this.clearSuggestions();
+	},
 	onEnter: function (e) {
 		// When no suggestion selected, enter submits the change
 		if (this.props.suggestionIndex === -1) {
@@ -305,6 +307,7 @@ module.exports = React.createClass({
 	},
 
 	onBlur: function () {
+		this.clearSuggestions();
 		this.updateValue();
 	},
 
@@ -348,6 +351,9 @@ function getSelectedNode () {
 }
 
 function selectionChanged (prevSel, sel) {
+	if (prevSel === null && sel === null) {
+		return false;
+	}
 	return !prevSel || !sel || prevSel.start !== sel.start || prevSel.end !== sel.end;
 }
 
