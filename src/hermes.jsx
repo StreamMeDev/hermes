@@ -218,7 +218,9 @@ module.exports = React.createClass({
 			e.preventDefault();
 		}
 	},
-
+	onEscape: function (e) {
+		this.clearSuggestions();
+	},
 	onEnter: function (e) {
 		// When no suggestion selected, enter submits the change
 		if (this.props.suggestionIndex === -1) {
