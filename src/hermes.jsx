@@ -351,7 +351,9 @@ function getSelectedNode () {
 }
 
 function selectionChanged (prevSel, sel) {
-	if(prevSel === null && sel === null) return false;
+	if (prevSel === null && sel === null) {
+		return false;
+	}
 	return !prevSel || !sel || prevSel.start !== sel.start || prevSel.end !== sel.end;
 }
 
