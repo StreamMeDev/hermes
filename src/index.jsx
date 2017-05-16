@@ -38,8 +38,8 @@ module.exports = React.createClass({
 			}
 		};
 	},
-	componentWillReceiveProps: function (newProps) {
-		if (newProps.suggestions) {
+	componentWillReceiveProps: function (newProps, oldProps) {
+		if (newProps.suggestions !== oldProps.suggestions) {
 			this.dispatch(setSuggestions(newProps.suggestions));
 		}
 	},
@@ -94,8 +94,6 @@ module.exports = React.createClass({
 		}, this.dispatch);
 	},
 	componentDidMount: function () {
-		console.log('mounting hermes');
-		console.log('hermes store', typeof this.props.store);
 		this.store = this.props.store || createDefaultStore(this.state);
 		this._unsubscribe = this.store.subscribe((state, oldState, action) => {
 			this.setState(state);
