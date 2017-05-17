@@ -5,42 +5,43 @@ const Flyout = require('@streammedev/flyout');
 const HermesWrapper = require('./wrapper');
 const defaultFormatValue = require('./default-format-value');
 const ifPropCall = require('./if-prop-is-func-call');
+const reactCompat = require('@streammedev/react-compat');
 const selection = typeof window !== 'undefined' ? require('selection-range') : () => {};
 const nbsp = String.fromCharCode(160);
 const zws = String.fromCharCode(8203);
 // Track which placeholder css rules have been added for the hermes instances, see below
 const cssRules = {};
 
-module.exports = React.createClass({
+module.exports = reactCompat.createClass({
 	displayName: 'Hermes',
 	propTypes: {
-		className: React.PropTypes.string,
-		placeholder: React.PropTypes.string,
-		emptyClassName: React.PropTypes.string,
-		contentClassName: React.PropTypes.string,
-		flyoutClassName: React.PropTypes.string,
-		flyoutElement: React.PropTypes.string,
-		children: React.PropTypes.node,
-		autoFocus: React.PropTypes.bool,
+		className: reactCompat.PropTypes.string,
+		placeholder: reactCompat.PropTypes.string,
+		emptyClassName: reactCompat.PropTypes.string,
+		contentClassName: reactCompat.PropTypes.string,
+		flyoutClassName: reactCompat.PropTypes.string,
+		flyoutElement: reactCompat.PropTypes.string,
+		children: reactCompat.PropTypes.node,
+		autoFocus: reactCompat.PropTypes.bool,
 
-		value: React.PropTypes.string,
-		formatValue: React.PropTypes.func,
-		onChangeValue: React.PropTypes.func,
+		value: reactCompat.PropTypes.string,
+		formatValue: reactCompat.PropTypes.func,
+		onChangeValue: reactCompat.PropTypes.func,
 
-		selection: React.PropTypes.object,
-		onChangeSelection: React.PropTypes.func,
+		selection: reactCompat.PropTypes.object,
+		onChangeSelection: reactCompat.PropTypes.func,
 
-		preventNewLines: React.PropTypes.bool,
+		preventNewLines: reactCompat.PropTypes.bool,
 
-		suggestions: React.PropTypes.array,
-		loadSuggestions: React.PropTypes.func,
-		clearSuggestions: React.PropTypes.func,
-		renderSuggestion: React.PropTypes.func,
-		suggestionIndex: React.PropTypes.number,
-		lastSuggestionIndex: React.PropTypes.number,
-		selectSuggestion: React.PropTypes.func,
-		decrSuggestionIndex: React.PropTypes.func,
-		incrSuggestionIndex: React.PropTypes.func
+		suggestions: reactCompat.PropTypes.array,
+		loadSuggestions: reactCompat.PropTypes.func,
+		clearSuggestions: reactCompat.PropTypes.func,
+		renderSuggestion: reactCompat.PropTypes.func,
+		suggestionIndex: reactCompat.PropTypes.number,
+		lastSuggestionIndex: reactCompat.PropTypes.number,
+		selectSuggestion: reactCompat.PropTypes.func,
+		decrSuggestionIndex: reactCompat.PropTypes.func,
+		incrSuggestionIndex: reactCompat.PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {
@@ -73,7 +74,7 @@ module.exports = React.createClass({
 			>
 				<div
 					contentEditable
-					ref={this.inputRef}
+					ref={reactCompat.refSet(this, 'input')}
 					className={this.props.contentClassName}
 					onInput={this.onInput}
 					placeholder={this.props.placeholder}
@@ -141,9 +142,9 @@ module.exports = React.createClass({
 			// doesn't seem to work.
 			setTimeout(() => {
 				if (!this.props.value || this.props.value === '') {
-					this.input.textContent = zws;
+					reactCompat.refGet(this, 'input').textContent = zws;
 				}
-				selection(this.input, this.props.selection || {});
+				selection(reactCompat.refGet(this, 'input'), this.props.selection || {});
 			});
 		}
 	},
@@ -162,23 +163,23 @@ module.exports = React.createClass({
 			// this fixes the focus issues around
 			// contentEditable with no text content
 			if (isEmpty) {
-				this.input.textContent = zws;
+				reactCompat.refGet(this, 'input').textContent = zws;
 			}
 
 			// Set the new seleciton
-			selection(this.input, this.props.selection);
+			selection(reactCompat.refGet(this, 'input'), this.props.selection);
 		} else if (valChanged) {
 			// If we selected a suggestion, but it was
 			// of the same length, then the selection
 			// doesnt change, but the value does, and the
 			// cursor gets reset to the start of the input,
 			// so set it here to fix that
-			selection(this.input, this.props.selection);
+			selection(reactCompat.refGet(this, 'input'), this.props.selection);
 		} else if (shouldFocus) {
-			this.input.focus();
+			reactCompat.refGet(this, 'input').focus();
 			// If selection is not at the start, set it
 			if (this.props.selection && this.props.selection.end !== 0) {
-				selection(this.input, this.props.selection);
+				selection(reactCompat.refGet(this, 'input'), this.props.selection);
 			}
 		}
 
@@ -194,10 +195,6 @@ module.exports = React.createClass({
 		} else if (this.props.suggestions && this.props.suggestions.length && ((selChanged && !atEnd) || isEmpty || endsInSpace)) {
 			this.clearSuggestions();
 		}
-	},
-
-	inputRef: function (ref) {
-		this.input = ref;
 	},
 
 	onKeyDown: function (e) {
@@ -321,11 +318,11 @@ module.exports = React.createClass({
 	},
 
 	loadSuggestions: function () {
-		ifPropCall(this.props, 'loadSuggestions', getSelectedNode().textContent, this.input.textContent);
+		ifPropCall(this.props, 'loadSuggestions', getSelectedNode().textContent, reactCompat.refGet(this, 'input').textContent);
 	},
 
 	updateSelection: function () {
-		var sel = selection(this.input);
+		var sel = selection(reactCompat.refGet(this, 'input'));
 		if (selectionChanged(this.props.selection, sel)) {
 			ifPropCall(this.props, 'onChangeSelection', sel);
 		}
@@ -334,7 +331,7 @@ module.exports = React.createClass({
 	updateValue: function () {
 		// Remove the zero width space if thats all thats there
 		// @NOTE search this file for "zws" to see where its added
-		var cleanInput = this.input.textContent.replace(zws, '');
+		var cleanInput = reactCompat.refGet(this, 'input').textContent.replace(zws, '');
 		if (cleanInput !== this.props.value) {
 			ifPropCall(this.props, 'onChangeValue', cleanInput);
 		}
