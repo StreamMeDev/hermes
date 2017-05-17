@@ -1,5 +1,6 @@
 'use strict';
 const React = require('react');
+const reactCompat = require('@streammedev/react-compat');
 const Hermes = require('./hermes');
 const createDefaultStore = require('./create-default-store');
 const {bindActionCreators} = require('@streammedev/flux-store');
@@ -8,28 +9,28 @@ const {changeSelection} = require('./actions/selection');
 const ifPropCall = require('./if-prop-is-func-call');
 const {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex, setSuggestions} = require('./actions/suggestions');
 
-module.exports = React.createClass({
+module.exports = reactCompat.createClass({
 	displayName: 'HermesContainer',
 	propTypes: {
-		className: React.PropTypes.string,
-		placeholder: React.PropTypes.string,
-		emptyClassName: React.PropTypes.string,
-		contentClassName: React.PropTypes.string,
-		flyoutClassName: React.PropTypes.string,
-		flyoutElement: React.PropTypes.string,
-		children: React.PropTypes.node,
-		autoFocus: React.PropTypes.bool,
-		value: React.PropTypes.string,
-		formatValue: React.PropTypes.func,
-		preventNewLines: React.PropTypes.bool,
-		suggestions: React.PropTypes.array,
-		loadSuggestions: React.PropTypes.func,
-		clearSuggestions: React.PropTypes.func,
-		renderSuggestion: React.PropTypes.func,
-		getSuggestionText: React.PropTypes.func,
-		onSelectSuggestion: React.PropTypes.func,
-		onChangeValue: React.PropTypes.func,
-		store: React.PropTypes.object
+		className: reactCompat.PropTypes.string,
+		placeholder: reactCompat.PropTypes.string,
+		emptyClassName: reactCompat.PropTypes.string,
+		contentClassName: reactCompat.PropTypes.string,
+		flyoutClassName: reactCompat.PropTypes.string,
+		flyoutElement: reactCompat.PropTypes.string,
+		children: reactCompat.PropTypes.node,
+		autoFocus: reactCompat.PropTypes.bool,
+		value: reactCompat.PropTypes.string,
+		formatValue: reactCompat.PropTypes.func,
+		preventNewLines: reactCompat.PropTypes.bool,
+		suggestions: reactCompat.PropTypes.array,
+		loadSuggestions: reactCompat.PropTypes.func,
+		clearSuggestions: reactCompat.PropTypes.func,
+		renderSuggestion: reactCompat.PropTypes.func,
+		getSuggestionText: reactCompat.PropTypes.func,
+		onSelectSuggestion: reactCompat.PropTypes.func,
+		onChangeValue: reactCompat.PropTypes.func,
+		store: reactCompat.PropTypes.object
 	},
 	getDefaultProps: function () {
 		return {

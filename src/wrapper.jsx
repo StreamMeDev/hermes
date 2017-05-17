@@ -1,23 +1,24 @@
 'use strict';
 const React = require('react');
 const ifPropCall = require('./if-prop-is-func-call');
+const reactCompat = require('@streammedev/react-compat');
 
-module.exports = React.createClass({
+module.exports = reactCompat.createClass({
 	displayName: 'HermesWrapper',
 	propTypes: {
-		onEnter: React.PropTypes.func,
-		onShiftEnter: React.PropTypes.func,
-		onEscape: React.PropTypes.func,
-		onArrowDown: React.PropTypes.func,
-		onArrowUp: React.PropTypes.func,
-		onCtrlC: React.PropTypes.func,
-		onCtrlA: React.PropTypes.func,
-		onCtrlE: React.PropTypes.func,
-		onAltB: React.PropTypes.func,
-		onAltF: React.PropTypes.func,
-		onKeyUp: React.PropTypes.func,
-		onKeyDown: React.PropTypes.func,
-		children: React.PropTypes.node
+		onEnter: reactCompat.PropTypes.func,
+		onShiftEnter: reactCompat.PropTypes.func,
+		onEscape: reactCompat.PropTypes.func,
+		onArrowDown: reactCompat.PropTypes.func,
+		onArrowUp: reactCompat.PropTypes.func,
+		onCtrlC: reactCompat.PropTypes.func,
+		onCtrlA: reactCompat.PropTypes.func,
+		onCtrlE: reactCompat.PropTypes.func,
+		onAltB: reactCompat.PropTypes.func,
+		onAltF: reactCompat.PropTypes.func,
+		onKeyUp: reactCompat.PropTypes.func,
+		onKeyDown: reactCompat.PropTypes.func,
+		children: reactCompat.PropTypes.node
 	},
 	render: function () {
 		// don't pass unnecessary props to children: https://fb.me/react-unknown-prop
