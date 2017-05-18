@@ -1,6 +1,6 @@
 {
   "name": "@streammedev/hermes",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "A composable React component for message composing with autocomplete and formatting",
   "main": "index.js",
   "keywords": [
