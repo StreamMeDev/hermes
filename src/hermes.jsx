@@ -307,7 +307,6 @@ module.exports = React.createClass({
 	},
 
 	onBlur: function () {
-		this.clearSuggestions();
 		this.updateValue();
 	},
 
