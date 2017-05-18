@@ -8,8 +8,34 @@ const ifPropCall = require('./if-prop-is-func-call');
 const selection = typeof window !== 'undefined' ? require('selection-range') : () => {};
 const nbsp = String.fromCharCode(160);
 const zws = String.fromCharCode(8203);
+
 // Track which placeholder css rules have been added for the hermes instances, see below
-const cssRules = {};
+var cssRules = {};
+var style;
+const placeholderCss = '{ content:attr(placeholder); }';
+const appendPlaceholderStyle = function (selector) {
+	// Only add once per class
+	if (cssRules[selector]) {
+		return;
+	}
+	cssRules[selector] = true;
+
+	try {
+		// This is the more elegant way because it does not append
+		// visibly to the dom, just uses an existing stylesheet
+		document.styleSheets[0].insertRule(selector + placeholderCss, 0);
+	} catch (e) {
+		// Firefox does not allow the above, so for this we create
+		// a style tag to append to
+		if (!style) {
+			style = document.createElement('style');
+			document.head.appendChild(style);
+		}
+		style.textContent = Object.keys(cssRules).reduce(function (str, key) {
+			return str + key + placeholderCss + '\n';
+		}, '');
+	}
+};
 
 module.exports = React.createClass({
 	displayName: 'Hermes',
@@ -127,9 +153,7 @@ module.exports = React.createClass({
 		//  .hermes-empty .hermes-content:not(:focus):before { content:attr(placeholder); }
 		//
 		// Only adds the rule once per unique className
-		if (!cssRules[this.props.contentClassName]) {
-			document.styleSheets[0].insertRule(`.${this.props.emptyClassName} .${this.props.contentClassName}:not(:focus):before { content:attr(placeholder); }`, 0);
-		}
+		appendPlaceholderStyle(`.${this.props.emptyClassName} .${this.props.contentClassName}:not(:focus):before`);
 
 		// Manage focus, because autoFocus property doesnt work on contenteditable
 		if (this.props.autoFocus) {
