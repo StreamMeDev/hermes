@@ -1,5 +1,7 @@
 'use strict';
 const React = require('react');
+const PropTypes = require('prop-types');
+const createReactClass = require('create-react-class');
 const debounce = require('debounce');
 const Flyout = require('@streammedev/flyout');
 const HermesWrapper = require('./wrapper');
@@ -37,36 +39,36 @@ const appendPlaceholderStyle = function (selector) {
 	}
 };
 
-module.exports = React.createClass({
+module.exports = createReactClass({
 	displayName: 'Hermes',
 	propTypes: {
-		className: React.PropTypes.string,
-		placeholder: React.PropTypes.string,
-		emptyClassName: React.PropTypes.string,
-		contentClassName: React.PropTypes.string,
-		flyoutClassName: React.PropTypes.string,
-		flyoutElement: React.PropTypes.string,
-		children: React.PropTypes.node,
-		autoFocus: React.PropTypes.bool,
+		className: PropTypes.string,
+		placeholder: PropTypes.string,
+		emptyClassName: PropTypes.string,
+		contentClassName: PropTypes.string,
+		flyoutClassName: PropTypes.string,
+		flyoutElement: PropTypes.string,
+		children: PropTypes.node,
+		autoFocus: PropTypes.bool,
 
-		value: React.PropTypes.string,
-		formatValue: React.PropTypes.func,
-		onChangeValue: React.PropTypes.func,
+		value: PropTypes.string,
+		formatValue: PropTypes.func,
+		onChangeValue: PropTypes.func,
 
-		selection: React.PropTypes.object,
-		onChangeSelection: React.PropTypes.func,
+		selection: PropTypes.object,
+		onChangeSelection: PropTypes.func,
 
-		preventNewLines: React.PropTypes.bool,
+		preventNewLines: PropTypes.bool,
 
-		suggestions: React.PropTypes.array,
-		loadSuggestions: React.PropTypes.func,
-		clearSuggestions: React.PropTypes.func,
-		renderSuggestion: React.PropTypes.func,
-		suggestionIndex: React.PropTypes.number,
-		lastSuggestionIndex: React.PropTypes.number,
-		selectSuggestion: React.PropTypes.func,
-		decrSuggestionIndex: React.PropTypes.func,
-		incrSuggestionIndex: React.PropTypes.func
+		suggestions: PropTypes.array,
+		loadSuggestions: PropTypes.func,
+		clearSuggestions: PropTypes.func,
+		renderSuggestion: PropTypes.func,
+		suggestionIndex: PropTypes.number,
+		lastSuggestionIndex: PropTypes.number,
+		selectSuggestion: PropTypes.func,
+		decrSuggestionIndex: PropTypes.func,
+		incrSuggestionIndex: PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {

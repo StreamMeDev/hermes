@@ -33,18 +33,20 @@
     "happiness": "^7.1.2",
     "mocha": "^3.2.0",
     "mochify": "^2.18.1",
-    "react": "<15.5.0",
-    "react-addons-test-utils": "<15.5.0",
-    "react-dom": "<15.5.0"
+    "react": "^15.6.0",
+    "react-addons-test-utils": "^15.6.0",
+    "react-dom": "^15.6.0"
   },
   "dependencies": {
     "@streammedev/flux-store": "^1.0.1",
     "@streammedev/flyout": "0.0.5",
+    "create-react-class": "^15.6.0",
+    "prop-types": "^15.5.10",
     "debounce": "^1.0.0",
     "selection-range": "^1.1.0"
   },
   "peerDependencies": {
-    "react": "<15.5.0",
-    "react-dom": "<15.5.0"
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
   }
 }
