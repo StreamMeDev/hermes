@@ -1,5 +1,7 @@
 'use strict';
 const React = require('react');
+const PropTypes = require('prop-types');
+const createReactClass = require('create-react-class');
 const Hermes = require('./hermes');
 const createDefaultStore = require('./create-default-store');
 const {bindActionCreators} = require('@streammedev/flux-store');
@@ -8,28 +10,28 @@ const {changeSelection} = require('./actions/selection');
 const ifPropCall = require('./if-prop-is-func-call');
 const {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex, setSuggestions} = require('./actions/suggestions');
 
-module.exports = React.createClass({
+module.exports = createReactClass({
 	displayName: 'HermesContainer',
 	propTypes: {
-		className: React.PropTypes.string,
-		placeholder: React.PropTypes.string,
-		emptyClassName: React.PropTypes.string,
-		contentClassName: React.PropTypes.string,
-		flyoutClassName: React.PropTypes.string,
-		flyoutElement: React.PropTypes.string,
-		children: React.PropTypes.node,
-		autoFocus: React.PropTypes.bool,
-		value: React.PropTypes.string,
-		formatValue: React.PropTypes.func,
-		preventNewLines: React.PropTypes.bool,
-		suggestions: React.PropTypes.array,
-		loadSuggestions: React.PropTypes.func,
-		clearSuggestions: React.PropTypes.func,
-		renderSuggestion: React.PropTypes.func,
-		getSuggestionText: React.PropTypes.func,
-		onSelectSuggestion: React.PropTypes.func,
-		onChangeValue: React.PropTypes.func,
-		store: React.PropTypes.object
+		className: PropTypes.string,
+		placeholder: PropTypes.string,
+		emptyClassName: PropTypes.string,
+		contentClassName: PropTypes.string,
+		flyoutClassName: PropTypes.string,
+		flyoutElement: PropTypes.string,
+		children: PropTypes.node,
+		autoFocus: PropTypes.bool,
+		value: PropTypes.string,
+		formatValue: PropTypes.func,
+		preventNewLines: PropTypes.bool,
+		suggestions: PropTypes.array,
+		loadSuggestions: PropTypes.func,
+		clearSuggestions: PropTypes.func,
+		renderSuggestion: PropTypes.func,
+		getSuggestionText: PropTypes.func,
+		onSelectSuggestion: PropTypes.func,
+		onChangeValue: PropTypes.func,
+		store: PropTypes.object
 	},
 	getDefaultProps: function () {
 		return {
