@@ -64,6 +64,8 @@ function render (state) {
 				onChangeValue={onChangeValue}
 				onSelectSuggestion={onSelectSuggestion}
 			/>
+
+			<p>Hermes is a confirgurable React component for composing messages.</p>
 		</div>
 	), el);
 }
