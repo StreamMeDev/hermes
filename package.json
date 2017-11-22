@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git@github.com:StreamMeDev/hermes"
   },
+  "happiness": {
+    "parser": "babel-eslint"
+  },
   "scripts": {
     "test": "npm run babel && happiness && mocha --grep 'BROWSER: ' --invert",
     "prepublish": "npm test",
@@ -26,27 +29,27 @@
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.19.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "enzyme": "^2.6.0",
-    "happiness": "^7.1.2",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^2.9.1",
+    "happiness": "^10.0.2",
     "mocha": "^3.2.0",
     "mochify": "^2.18.1",
-    "react": "^15.6.0",
-    "react-addons-test-utils": "^15.6.0",
-    "react-dom": "^15.6.0"
+    "react-test-renderer": "^16.1.1"
   },
   "dependencies": {
     "@streammedev/flux-store": "^1.0.1",
     "@streammedev/flyout": "0.0.6",
-    "create-react-class": "^15.6.0",
     "debounce": "^1.0.0",
-    "prop-types": "^15.5.10",
+    "i": "^0.3.6",
     "selection-range": "^1.1.0"
   },
   "peerDependencies": {
-    "react": "^15.0.0",
-    "react-dom": "^15.0.0"
+    "react": ">15.0.0",
+    "react-dom": ">15.0.0",
+    "prop-types": "^15.5.10"
   }
 }
