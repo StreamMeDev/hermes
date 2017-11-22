@@ -1,12 +1,10 @@
 'use strict';
 const React = require('react');
 const PropTypes = require('prop-types');
-const createReactClass = require('create-react-class');
 const ifPropCall = require('./if-prop-is-func-call');
 
-module.exports = createReactClass({
-	displayName: 'HermesWrapper',
-	propTypes: {
+module.exports = class HermesWrapper extends React.Component {
+	static propTypes = {
 		onEnter: PropTypes.func,
 		onShiftEnter: PropTypes.func,
 		onEscape: PropTypes.func,
@@ -20,8 +18,9 @@ module.exports = createReactClass({
 		onKeyUp: PropTypes.func,
 		onKeyDown: PropTypes.func,
 		children: PropTypes.node
-	},
-	render: function () {
+	};
+
+	render () {
 		// don't pass unnecessary props to children: https://fb.me/react-unknown-prop
 		/* eslint-disable */
 		const {
@@ -41,8 +40,9 @@ module.exports = createReactClass({
 		} = this.props;
 		/* eslint-enable */
 		return <div {...rest} onKeyUp={this.onKeyUp}>{children}</div>;
-	},
-	onKeyUp: function (e) {
+	}
+
+	onKeyUp = (e) => {
 		var props = this.props;
 		switch (e.which) {
 			case 13:
@@ -97,4 +97,4 @@ module.exports = createReactClass({
 				break;
 		}
 	}
-});
+};

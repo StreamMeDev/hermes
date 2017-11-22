@@ -1,7 +1,6 @@
 'use strict';
 const React = require('react');
 const PropTypes = require('prop-types');
-const createReactClass = require('create-react-class');
 const Hermes = require('./hermes');
 const createDefaultStore = require('./create-default-store');
 const {bindActionCreators} = require('@streammedev/flux-store');
@@ -10,9 +9,8 @@ const {changeSelection} = require('./actions/selection');
 const ifPropCall = require('./if-prop-is-func-call');
 const {decrSuggestionIndex, incrSuggestionIndex, selectSuggestion, setSuggestionIndex, setSuggestions} = require('./actions/suggestions');
 
-module.exports = createReactClass({
-	displayName: 'HermesContainer',
-	propTypes: {
+module.exports = class HermesContainer extends React.Component {
+	static propTypes = {
 		className: PropTypes.string,
 		placeholder: PropTypes.string,
 		emptyClassName: PropTypes.string,
@@ -32,29 +30,30 @@ module.exports = createReactClass({
 		onSelectSuggestion: PropTypes.func,
 		onChangeValue: PropTypes.func,
 		store: PropTypes.object
-	},
-	getDefaultProps: function () {
-		return {
-			getSuggestionText: function (suggestion) {
-				return suggestion;
-			}
-		};
-	},
-	componentWillReceiveProps: function (newProps, oldProps) {
+	};
+
+	static defaultProps = {
+		getSuggestionText: suggestion => suggestion
+	};
+
+	componentWillReceiveProps (newProps, oldProps) {
 		if (newProps.suggestions !== oldProps.suggestions) {
 			this.dispatch(setSuggestions(newProps.suggestions));
 		}
-	},
-	getInitialState: function () {
-		return {
-			value: this.props.value || '',
+	}
+
+	constructor (props) {
+		super(props);
+		this.state = {
+			value: props.value || '',
 			suggestionIndex: -1,
 			lastSuggestionIndex: -1,
 			suggestions: null,
 			selection: null
 		};
-	},
-	render: function () {
+	}
+
+	render () {
 		return (
 			<Hermes
 				className={this.props.className}
@@ -77,8 +76,9 @@ module.exports = createReactClass({
 				{...this.actions}
 			>{this.props.children}</Hermes>
 		);
-	},
-	componentWillMount: function () {
+	}
+
+	componentWillMount () {
 		// Bind action creators
 		this.actions = bindActionCreators({
 			onChangeSelection: changeSelection,
@@ -94,17 +94,20 @@ module.exports = createReactClass({
 				return selectSuggestion(this.props.getSuggestionText(selection));
 			}
 		}, this.dispatch);
-	},
-	componentDidMount: function () {
+	}
+
+	componentDidMount () {
 		this.store = this.props.store || createDefaultStore(this.state);
 		this._unsubscribe = this.store.subscribe((state, oldState, action) => {
 			this.setState(state);
 		});
-	},
-	componentWillUnmount: function () {
+	}
+
+	componentWillUnmount () {
 		this._unsubscribe();
-	},
-	dispatch: function (action) {
+	}
+
+	dispatch = (action) => {
 		this.store.dispatch(action);
 	}
-});
+};

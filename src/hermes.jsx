@@ -1,7 +1,6 @@
 'use strict';
 const React = require('react');
 const PropTypes = require('prop-types');
-const createReactClass = require('create-react-class');
 const debounce = require('debounce');
 const Flyout = require('@streammedev/flyout');
 const HermesWrapper = require('./wrapper');
@@ -39,9 +38,8 @@ const appendPlaceholderStyle = function (selector) {
 	}
 };
 
-module.exports = createReactClass({
-	displayName: 'Hermes',
-	propTypes: {
+module.exports = class Hermes extends React.Component {
+	static propTypes = {
 		className: PropTypes.string,
 		placeholder: PropTypes.string,
 		emptyClassName: PropTypes.string,
@@ -69,24 +67,24 @@ module.exports = createReactClass({
 		selectSuggestion: PropTypes.func,
 		decrSuggestionIndex: PropTypes.func,
 		incrSuggestionIndex: PropTypes.func
-	},
-	getDefaultProps: function () {
-		return {
-			className: 'hermes',
-			contentClassName: 'hermes-content',
-			emptyClassName: 'hermes-empty',
-			flyoutElement: 'ol',
-			formatValue: defaultFormatValue,
-			preventNewLines: false,
-			suggestionIndex: -1,
-			lastSuggestionIndex: -1,
-			selection: {start: 0, end: 0},
-			renderSuggestion (suggestion, selected) {
-				return <li key={suggestion} className={selected ? 'selected' : ''}>{suggestion}</li>;
-			}
-		};
-	},
-	render: function () {
+	};
+
+	static defaultProps = {
+		className: 'hermes',
+		contentClassName: 'hermes-content',
+		emptyClassName: 'hermes-empty',
+		flyoutElement: 'ol',
+		formatValue: defaultFormatValue,
+		preventNewLines: false,
+		suggestionIndex: -1,
+		lastSuggestionIndex: -1,
+		selection: {start: 0, end: 0},
+		renderSuggestion: (suggestion, selected) => {
+			return <li key={suggestion} className={selected ? 'selected' : ''}>{suggestion}</li>;
+		}
+	};
+
+	render () {
 		return (
 			<HermesWrapper
 				className={this.props.className + (!this.props.value || this.props.value === '' ? ' ' + this.props.emptyClassName : '')}
@@ -143,9 +141,9 @@ module.exports = createReactClass({
 				) : false}
 			</HermesWrapper>
 		);
-	},
+	}
 
-	componentDidMount: function () {
+	componentDidMount () {
 		// Debounce the loadSuggestions method
 		this.loadSuggestions = debounce(this.loadSuggestions, 250);
 
@@ -172,9 +170,9 @@ module.exports = createReactClass({
 				selection(this.input, this.props.selection || {});
 			});
 		}
-	},
+	}
 
-	componentDidUpdate: function (prevProps) {
+	componentDidUpdate (prevProps) {
 		var selChanged = selectionChanged(prevProps.selection, this.props.selection);
 		var valChanged = this.props.value !== prevProps.value;
 		var isEmpty = !this.props.value || this.props.value === '';
@@ -220,13 +218,13 @@ module.exports = createReactClass({
 		} else if (this.props.suggestions && this.props.suggestions.length && ((selChanged && !atEnd) || isEmpty || endsInSpace)) {
 			this.clearSuggestions();
 		}
-	},
+	}
 
-	inputRef: function (ref) {
+	inputRef = (ref) => {
 		this.input = ref;
-	},
+	}
 
-	onKeyDown: function (e) {
+	onKeyDown = (e) => {
 		// The formatting here is crazy, what I was trying to
 		// get across what the grouping of statements for the
 		// different parts of this, and the minifier will make
@@ -243,11 +241,13 @@ module.exports = createReactClass({
 		) {
 			e.preventDefault();
 		}
-	},
-	onEscape: function (e) {
+	}
+
+	onEscape = (e) => {
 		this.clearSuggestions();
-	},
-	onEnter: function (e) {
+	}
+
+	onEnter = (e) => {
 		// When no suggestion selected, enter submits the change
 		if (this.props.suggestionIndex === -1) {
 			return ifPropCall(this.props, 'onSubmit', e);
@@ -256,42 +256,42 @@ module.exports = createReactClass({
 		// We have suggestions, and one is selected,
 		// dispatch the selection event
 		this.selectSuggestion();
-	},
+	}
 
-	onKeyUp: function () {
+	onKeyUp = () => {
 		this.updateSelection();
 
 		// Fix for IE where the onInput event is not fired.  Compares
 		// the value with the input value and fires the onChangeValue
 		// if it is different on each keyup
 		this.updateValue();
-	},
+	}
 
-	onCtrlC: function () {
+	onCtrlC = () => {
 		ifPropCall(this.props, 'onChangeValue', '');
-	},
+	}
 
-	onCtrlA: function () {
+	onCtrlA = () => {
 		ifPropCall(this.props, 'onChangeSelection', {
 			start: 0,
 			end: 0
 		});
-	},
+	}
 
-	onCtrlE: function () {
+	onCtrlE = () => {
 		ifPropCall(this.props, 'onChangeSelection', {
 			start: this.props.value.length,
 			end: this.props.value.length
 		});
-	},
+	}
 
-	onInput: function (e) {
+	onInput = (e) => {
 		// On input, update the selection and the value
 		this.updateSelection();
 		this.updateValue();
-	},
+	}
 
-	onMouseDown: function () {
+	onMouseDown = () => {
 		// If we mouse down inside the input, then
 		// whereever we mouseup we should update
 		// the selection range
@@ -304,9 +304,9 @@ module.exports = createReactClass({
 			}.bind(this));
 		}.bind(this);
 		window.addEventListener('mouseup', mouseup);
-	},
+	}
 
-	onArrowUp: function (e) {
+	onArrowUp = (e) => {
 		// If we dont have suggestions, just update selection
 		if (!this.props.suggestions || !this.props.suggestions.length) {
 			return this.updateSelection();
@@ -317,9 +317,9 @@ module.exports = createReactClass({
 		// the selected index
 		e.preventDefault();
 		ifPropCall(this.props, 'decrSuggestionIndex');
-	},
+	}
 
-	onArrowDown: function (e) {
+	onArrowDown = (e) => {
 		// If we dont have suggestions, just update selection
 		if (!this.props.suggestions || !this.props.suggestions.length) {
 			return this.updateSelection();
@@ -330,33 +330,33 @@ module.exports = createReactClass({
 		// the selected index
 		e.preventDefault();
 		ifPropCall(this.props, 'incrSuggestionIndex');
-	},
+	}
 
-	onBlur: function () {
+	onBlur = () => {
 		this.updateValue();
-	},
+	}
 
-	clearSuggestions: function () {
+	clearSuggestions = () => {
 		ifPropCall(this.props, 'clearSuggestions');
-	},
+	}
 
-	selectSuggestion: function (index) {
+	selectSuggestion = (index) => {
 		index = index || this.props.suggestionIndex;
 		ifPropCall(this.props, 'selectSuggestion', this.props.suggestions[index]);
-	},
+	}
 
-	loadSuggestions: function () {
+	loadSuggestions = () => {
 		ifPropCall(this.props, 'loadSuggestions', getSelectedNode().textContent, this.input.textContent);
-	},
+	}
 
-	updateSelection: function () {
+	updateSelection = () => {
 		var sel = selection(this.input);
 		if (selectionChanged(this.props.selection, sel)) {
 			ifPropCall(this.props, 'onChangeSelection', sel);
 		}
-	},
+	}
 
-	updateValue: function () {
+	updateValue = () => {
 		// Remove the zero width space if thats all thats there
 		// @NOTE search this file for "zws" to see where its added
 		var cleanInput = this.input.textContent.replace(zws, '');
@@ -364,7 +364,7 @@ module.exports = createReactClass({
 			ifPropCall(this.props, 'onChangeValue', cleanInput);
 		}
 	}
-});
+};
 
 function getSelectedNode () {
 	var sel = window.getSelection();
