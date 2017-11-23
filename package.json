@@ -20,7 +20,6 @@
   },
   "scripts": {
     "test": "npm run babel && happiness && mocha --grep 'BROWSER: ' --invert",
-    "prepublish": "npm test",
     "postpublish": "git push && git push origin --tags",
     "test-browser": "mochify",
     "babel": "babel src -d lib",
@@ -38,11 +37,14 @@
     "happiness": "^10.0.2",
     "mocha": "^3.2.0",
     "mochify": "^2.18.1",
-    "react-test-renderer": "^16.1.1"
+    "react-test-renderer": "^16.1.1",
+    "react": ">15.0.0",
+    "react-dom": ">15.0.0",
+    "prop-types": ">15.5.10"
   },
   "dependencies": {
     "@streammedev/flux-store": "^1.0.1",
-    "@streammedev/flyout": "0.0.6",
+    "@streammedev/flyout": "1.0.0",
     "debounce": "^1.0.0",
     "i": "^0.3.6",
     "selection-range": "^1.1.0"
@@ -50,6 +52,6 @@
   "peerDependencies": {
     "react": ">15.0.0",
     "react-dom": ">15.0.0",
-    "prop-types": "^15.5.10"
+    "prop-types": ">15.5.10"
   }
 }
