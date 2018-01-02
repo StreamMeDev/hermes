@@ -189,8 +189,14 @@ module.exports = class Hermes extends React.Component {
 				this.input.textContent = zws;
 			}
 
-			// Set the new seleciton
-			selection(this.input, this.props.selection);
+			// Set the new selection
+			selection(this.input, {
+				start: this.props.selection.start,
+				end: this.props.selection.end,
+				// at start false here because FF will set the selection to the
+				// start of the next text element when setting to the end of a line
+				atStart: false
+			});
 		} else if (valChanged) {
 			// If we selected a suggestion, but it was
 			// of the same length, then the selection
@@ -359,7 +365,7 @@ module.exports = class Hermes extends React.Component {
 	updateValue = () => {
 		// Remove the zero width space if thats all thats there
 		// @NOTE search this file for "zws" to see where its added
-		var cleanInput = this.input.textContent.replace(zws, '');
+		var cleanInput = cleanSpaces(this.input.textContent);
 		if (cleanInput !== this.props.value) {
 			ifPropCall(this.props, 'onChangeValue', cleanInput);
 		}
@@ -394,4 +400,10 @@ function atEndOfNode (node) {
 	text = text.replace(zws, '');
 
 	return sel.end === sel.start && sel.end === text.length;
+}
+
+var rZws = new RegExp(zws, 'g');
+var rSp = new RegExp(' ', 'g');
+function cleanSpaces (val) {
+	return val.replace(rZws, '').replace(rSp, nbsp);
 }
