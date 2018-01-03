@@ -190,7 +190,13 @@ module.exports = class Hermes extends React.Component {
 			}
 
 			// Set the new seleciton
-			selection(this.input, this.props.selection);
+			selection(this.input, {
+				start: this.props.selection.start,
+				end: this.props.selection.end,
+				// at start false here because FF will set the selection to the
+				// start of the next text element when setting to the end of a line
+				atStart: false
+			});
 		} else if (valChanged) {
 			// If we selected a suggestion, but it was
 			// of the same length, then the selection
