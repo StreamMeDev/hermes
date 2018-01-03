@@ -8,6 +8,9 @@ const defaultFormatValue = require('./default-format-value');
 const ifPropCall = require('./if-prop-is-func-call');
 const selection = typeof window !== 'undefined' ? require('selection-range') : () => {};
 const nbsp = String.fromCharCode(160);
+const nbspOrNewlinesGlobalRegex = new RegExp(nbsp + '|\n', 'g');
+const nbspGlobalRegex = new RegExp(nbsp, 'g');
+const whitespaceGlobalRegex = new RegExp('\\s', 'g');
 const zws = String.fromCharCode(8203);
 
 // Track which placeholder css rules have been added for the hermes instances, see below
@@ -57,6 +60,8 @@ module.exports = class Hermes extends React.Component {
 		onChangeSelection: PropTypes.func,
 
 		preventNewLines: PropTypes.bool,
+		normalizeWhitespace: PropTypes.bool,
+		maxLength: PropTypes.number,
 
 		suggestions: PropTypes.array,
 		loadSuggestions: PropTypes.func,
@@ -66,7 +71,7 @@ module.exports = class Hermes extends React.Component {
 		lastSuggestionIndex: PropTypes.number,
 		selectSuggestion: PropTypes.func,
 		decrSuggestionIndex: PropTypes.func,
-		incrSuggestionIndex: PropTypes.func
+		incrSuggestionIndex: PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -76,6 +81,8 @@ module.exports = class Hermes extends React.Component {
 		flyoutElement: 'ol',
 		formatValue: defaultFormatValue,
 		preventNewLines: false,
+		normalizeWhitespace: false,
+		maxLength: -1,
 		suggestionIndex: -1,
 		lastSuggestionIndex: -1,
 		selection: {start: 0, end: 0},
@@ -104,6 +111,10 @@ module.exports = class Hermes extends React.Component {
 					onKeyDown={this.onKeyDown}
 					onBlur={this.onBlur}
 					onMouseDown={this.onMouseDown}
+					style={
+						// Prevents browser from 'collapsing' whitespace with nbsp characters
+						{whiteSpace: 'pre-wrap'}
+					}
 				/>
 				{this.props.children}
 				{this.props.suggestions && this.props.suggestions.length ? (
@@ -173,7 +184,7 @@ module.exports = class Hermes extends React.Component {
 		var selChanged = selectionChanged(prevProps.selection, this.props.selection);
 		var valChanged = this.props.value !== prevProps.value;
 		var isEmpty = !this.props.value || this.props.value === '';
-		var endsInSpace = this.props.value && this.props.value[this.props.value.length - 1] === nbsp;
+		var endsInSpace = this.props.value && this.props.value[this.props.value.length - 1] === ' ';
 		var shouldFocus = !prevProps.autoFocus && this.props.autoFocus;
 
 		// Update the selection if it has changed
@@ -336,9 +347,24 @@ module.exports = class Hermes extends React.Component {
 	}
 
 	updateValue = () => {
+		var cleanInput = this.input.textContent;
+		if (this.props.maxLength > -1) {
+			if  (cleanInput.length > this.props.maxLength) {
+				cleanInput = cleanInput.substr(0, this.props.maxLength);
+			}
+		}
 		// Remove the zero width space if thats all thats there
 		// @NOTE search this file for "zws" to see where its added
-		var cleanInput = this.input.textContent.replace(zws, '');
+		cleanInput = this.input.textContent.replace(zws, '');
+		
+		if (this.props.normalizeWhitespace) {
+			cleanInput = cleanInput.replace(whitespaceGlobalRegex, ' ');
+		} else if (this.props.preventNewLines) {
+			cleanInput = cleanInput.replace(nbspOrNewlinesGlobalRegex, ' ');
+		} else {
+			// Browsers sometimes replace spaces with nbsp
+			cleanInput = cleanInput.replace(nbspGlobalRegex, ' ');
+		}
 		if (cleanInput !== this.props.value) {
 			ifPropCall(this.props, 'onChangeValue', cleanInput);
 		}
