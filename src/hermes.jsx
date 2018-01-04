@@ -93,9 +93,6 @@ module.exports = class Hermes extends React.Component {
 				onArrowUp={this.onArrowUp}
 				onArrowDown={this.onArrowDown}
 				onKeyUp={this.onKeyUp}
-				onCtrlC={this.onCtrlC}
-				onCtrlA={this.onCtrlA}
-				onCtrlE={this.onCtrlE}
 			>
 				<div
 					contentEditable
@@ -271,24 +268,6 @@ module.exports = class Hermes extends React.Component {
 		// the value with the input value and fires the onChangeValue
 		// if it is different on each keyup
 		this.updateValue();
-	}
-
-	onCtrlC = () => {
-		ifPropCall(this.props, 'onChangeValue', '');
-	}
-
-	onCtrlA = () => {
-		ifPropCall(this.props, 'onChangeSelection', {
-			start: 0,
-			end: 0
-		});
-	}
-
-	onCtrlE = () => {
-		ifPropCall(this.props, 'onChangeSelection', {
-			start: this.props.value.length,
-			end: this.props.value.length
-		});
 	}
 
 	onInput = (e) => {
