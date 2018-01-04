@@ -93,7 +93,6 @@ module.exports = class Hermes extends React.Component {
 				onArrowUp={this.onArrowUp}
 				onArrowDown={this.onArrowDown}
 				onKeyUp={this.onKeyUp}
-				onCtrlC={this.onCtrlC}
 				onCtrlA={this.onCtrlA}
 				onCtrlE={this.onCtrlE}
 			>
@@ -271,10 +270,6 @@ module.exports = class Hermes extends React.Component {
 		// the value with the input value and fires the onChangeValue
 		// if it is different on each keyup
 		this.updateValue();
-	}
-
-	onCtrlC = () => {
-		ifPropCall(this.props, 'onChangeValue', '');
 	}
 
 	onCtrlA = () => {
